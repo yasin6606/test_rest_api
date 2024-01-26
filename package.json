@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "clear && rm -rf build && tsc && node build/server.js"
+    "dev": "tsc && node build/server.js"
   },
   "author": "yasin",
   "license": "ISC",

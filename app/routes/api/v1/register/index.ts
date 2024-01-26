@@ -6,6 +6,5 @@ const routers: Router = Router();
 const loginCObj: RegC = new RegC();
 
 routers.post("/", loginCObj.register);
-routers.post("/temp", loginCObj.tempRegister);
 
 export default routers;
