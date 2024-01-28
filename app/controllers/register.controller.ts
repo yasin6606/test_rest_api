@@ -10,7 +10,7 @@ class RegisterController {
             let newUserCreated = await newUser.save();
 
             // Do not reveal the password
-            delete newUserCreated.password;
+	    newUserCreated.password = undefined;
 
             newUserCreated ? res.status(201).json(newUserCreated) : res.status(500).json({msg: "cannot register new one!"});
         } catch (error) {
