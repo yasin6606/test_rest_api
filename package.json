@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsc && node build/server.js"
+    "prestart": "clear || cls",
+    "start": "tsc && node build/server.js"
   },
   "author": "yasin",
   "license": "ISC",
