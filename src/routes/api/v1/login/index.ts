@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {GET_TOKEN, USER_INFO} from "../routesList";
+import {GET_TOKEN, USER_INFO} from "../list.router";
 import LoginController from "../../../../controllers/login.constroller"
 import userFound from "../../../../middleware/userFound.middleware";
 

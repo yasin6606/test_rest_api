@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv"
 import http from "http";
-import {ListenOptions, AddressInfo} from "net";
+import {ListenOptions} from "net";
 import express, {Express, Request} from "express";
 import cors from "cors"
 import * as bodyParser from "body-parser"
@@ -8,7 +8,9 @@ import {ConnectOptions, Mongoose, connect} from "mongoose";
 import {address} from "ip";
 import EVENTS_LIST from "./assets/events/list.event";
 import ErrorHandling from "./assets/errors/ErrorHandling";
+import {STAR} from "./routes/api/v1/list.router";
 import routes from "./routes";
+import NotfoundRoute from "./middleware/notfoundRoute.middleware";
 
 class Server extends ErrorHandling {
     private app: Express = express();
@@ -62,6 +64,7 @@ class Server extends ErrorHandling {
 
     private setRoutes = (): void => {
         this.app.use(routes);
+        this.app.use(STAR, NotfoundRoute);
     }
 }
 
