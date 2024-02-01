@@ -9,13 +9,8 @@ import {address} from "ip";
 import {STAR} from "./routes/api/v1/list.routes.v1";
 import {ERROR_EVENT} from "./assets/events/list.event";
 import ErrorHandling from "./assets/errors/ErrorHandling";
-import {STAR} from "./routes/api/v1/list.router";
 import routes from "./routes";
-<<<<<<< HEAD
 import notExistedRoute from "./middleware/notExistedRoute.middleware";
-=======
-import NotfoundRoute from "./middleware/notfoundRoute.middleware";
->>>>>>> 6eb0bba96ec9676a5eb45083529bf7d07f8df52b
 
 class Server extends ErrorHandling {
     private app: Express = express();
@@ -69,11 +64,7 @@ class Server extends ErrorHandling {
 
     private setRoutes = (): void => {
         this.app.use(routes);
-<<<<<<< HEAD
         this.app.use(STAR, notExistedRoute);
-=======
-        this.app.use(STAR, NotfoundRoute);
->>>>>>> 6eb0bba96ec9676a5eb45083529bf7d07f8df52b
     }
 }
 
