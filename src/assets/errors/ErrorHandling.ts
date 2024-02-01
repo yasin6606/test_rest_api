@@ -1,14 +1,13 @@
-import e from "./errorsList";
+import e from "./list.error";
 import {Response} from "express";
 
 class ErrorInheritance extends Error {
-    constructor(props: any) {
-        super(props);
+    constructor() {
+        super();
     }
-
 }
 
-class ErrorHandling {
+class ErrorHandling extends ErrorInheritance {
     private sendErrorHandler = (res: Response, errorCode: number, customError?: any): void => {
         if (customError) {
             res.status(errorCode).send(customError);
@@ -25,6 +24,10 @@ class ErrorHandling {
 
     public static sendErrorStatic = (res: Response, errorCode: number, customError?: any): void => {
         new ErrorHandling().sendErrorHandler(res, errorCode, customError)
+    }
+
+    public consoleError = (errorCode: number, customError?: any): void => {
+        console.error(`Error Code: ${errorCode}\n${customError}`);
     }
 }
 

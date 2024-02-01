@@ -2,7 +2,7 @@
   "name": "test_rest_api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "runner.ts",
   "scripts": {
     "prestart": "clear || cls",
     "start": "tsc && node build/server.js"

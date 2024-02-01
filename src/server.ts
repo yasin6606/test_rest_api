@@ -4,9 +4,11 @@ import express, {Express, Request} from "express";
 import cors from "cors"
 import * as bodyParser from "body-parser"
 import {ConnectOptions, Mongoose, connect} from "mongoose";
+import EVENTS_LIST from "./assets/events/list.event";
+import ErrorHandling from "./assets/errors/ErrorHandling";
 import routes from "./routes";
 
-class Server {
+class Server extends ErrorHandling {
     private app: Express = express();
     private DB_URI: string = "mongodb://127.0.0.1:27017";
     private DB_NAME: string = "test_rest_api_db";
@@ -15,6 +17,8 @@ class Server {
     };
 
     constructor() {
+        super();
+
         dotenv.config();
         this.setHTTPServer();
         this.setConfig();
@@ -30,13 +34,19 @@ class Server {
             console.log(`Server is listening on ${process.env.HTTP_SERVER_PORT}`);
         });
 
-        httpListing.on("error", error => console.log(`Server runs into a problem: ${error}`));
+        httpListing.on(EVENTS_LIST.ERROR, error => this.consoleError(501, error));
     }
 
     private mongooseConfig = async (): Promise<any> => {
-        const db: Mongoose = await connect(this.DB_URI, this.mongooseOpt);
+        try {
+            const db: Mongoose = await connect(this.DB_URI, this.mongooseOpt);
 
-        !db ? console.log('database has ERROR') : console.log('database successfully connected');
+            if (!db) throw db;
+
+            console.info('database successfully connected');
+        } catch (error) {
+            this.consoleError(502, error);
+        }
     }
 
     private setConfig = (): void => {
