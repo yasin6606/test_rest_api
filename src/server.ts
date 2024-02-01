@@ -6,7 +6,8 @@ import cors from "cors"
 import * as bodyParser from "body-parser"
 import {ConnectOptions, Mongoose, connect} from "mongoose";
 import {address} from "ip";
-import {STAR} from "./routes/api/v1/list.routes.v1";
+import {resolve} from "path";
+import {STAR, STATIC} from "./routes/api/v1/list.routes.v1";
 import {ERROR_EVENT} from "./assets/events/list.event";
 import ErrorHandling from "./assets/errors/ErrorHandling";
 import routes from "./routes";
@@ -64,6 +65,7 @@ class Server extends ErrorHandling {
 
     private setRoutes = (): void => {
         this.app.use(routes);
+        this.app.use(STATIC, express.static(resolve(__dirname, "public")));
         this.app.use(STAR, notExistedRoute);
     }
 }
