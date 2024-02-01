@@ -10,7 +10,10 @@ const preSaveHandler: PreSaveMiddlewareFunction = async function (next): Promise
 };
 
 const userSchema = new Schema<IUser, IUserModel>({
-    email: {type: String, required: true},
+    firstname: {type: String, trim: true},
+    lastname: {type: String, trim: true},
+    phoneNumber: {type: String, trim: true},
+    email: {type: String, trim: true, required: true},
     password: {type: String, required: true},
 }, {timestamps: true});
 

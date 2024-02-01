@@ -36,7 +36,8 @@ class LoginController extends ErrorHandling {
 
             const user = await UserM.findOne(_id) as IUser;
 
-            res.json({email: user.email});
+            // @ts-ignore
+            res.json({...user._doc, _id: undefined, password: undefined});
         } catch (error) {
             this.sendError(res, 500, error);
         }
