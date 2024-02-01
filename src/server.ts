@@ -1,15 +1,20 @@
 import * as dotenv from "dotenv"
 import http from "http";
+import {ListenOptions, AddressInfo} from "net";
 import express, {Express, Request} from "express";
 import cors from "cors"
 import * as bodyParser from "body-parser"
 import {ConnectOptions, Mongoose, connect} from "mongoose";
+import {address} from "ip";
 import EVENTS_LIST from "./assets/events/list.event";
 import ErrorHandling from "./assets/errors/ErrorHandling";
 import routes from "./routes";
 
 class Server extends ErrorHandling {
     private app: Express = express();
+    private ipv4: string = address();
+    private port: number = 5000;
+    private listenOptions: ListenOptions = {host: this.ipv4, port: this.port};
     private DB_URI: string = "mongodb://127.0.0.1:27017";
     private DB_NAME: string = "test_rest_api_db";
     private mongooseOpt: ConnectOptions = {
@@ -28,10 +33,10 @@ class Server extends ErrorHandling {
     private setHTTPServer = (): void => {
         const httpServer = http.createServer(this.app);
 
-        const httpListing = httpServer.listen(process.env.HTTP_SERVER_PORT, async () => {
+        const httpListing = httpServer.listen(this.listenOptions, async () => {
             await this.mongooseConfig();
 
-            console.log(`Server is listening on ${process.env.HTTP_SERVER_PORT}`);
+            console.log(`Server is listening on http://${this.ipv4}:${this.port}`);
         });
 
         httpListing.on(EVENTS_LIST.ERROR, error => this.consoleError(501, error));

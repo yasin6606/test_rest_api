@@ -5,7 +5,7 @@
   "main": "runner.ts",
   "scripts": {
     "prestart": "clear || cls",
-    "start": "tsc && node build/server.js"
+    "start": "tsc && node build/runner.js"
   },
   "author": "yasin",
   "license": "ISC",
@@ -20,10 +20,14 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "ip": "^1.1.8",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.8",
     "morgan": "^1.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/ip": "^1.1.3"
   }
 }
