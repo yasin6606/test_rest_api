@@ -1,3 +1,1 @@
-export default {
-    ERROR: "error"
-}
+export const ERROR_EVENT = "error";

@@ -1,14 +1,16 @@
 import * as dotenv from "dotenv"
 import http from "http";
-import {ListenOptions, AddressInfo} from "net";
+import {ListenOptions} from "net";
 import express, {Express, Request} from "express";
 import cors from "cors"
 import * as bodyParser from "body-parser"
 import {ConnectOptions, Mongoose, connect} from "mongoose";
 import {address} from "ip";
-import EVENTS_LIST from "./assets/events/list.event";
+import {STAR} from "./routes/api/v1/list.routes.v1";
+import {ERROR_EVENT} from "./assets/events/list.event";
 import ErrorHandling from "./assets/errors/ErrorHandling";
 import routes from "./routes";
+import notExistedRoute from "./middleware/notExistedRoute.middleware";
 
 class Server extends ErrorHandling {
     private app: Express = express();
@@ -39,7 +41,7 @@ class Server extends ErrorHandling {
             console.log(`Server is listening on http://${this.ipv4}:${this.port}`);
         });
 
-        httpListing.on(EVENTS_LIST.ERROR, error => this.consoleError(501, error));
+        httpListing.on(ERROR_EVENT, error => this.consoleError(501, error));
     }
 
     private mongooseConfig = async (): Promise<any> => {
@@ -62,6 +64,7 @@ class Server extends ErrorHandling {
 
     private setRoutes = (): void => {
         this.app.use(routes);
+        this.app.use(STAR, notExistedRoute);
     }
 }
 

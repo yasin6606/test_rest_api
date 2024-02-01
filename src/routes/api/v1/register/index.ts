@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {ROOT} from "../routesList";
+import {ROOT} from "../list.routes.v1";
 import RegC from "../../../../controllers/register.controller";
 import userExistance from "../../../../middleware/userExistance.middleware";
 
