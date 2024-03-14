@@ -1,14 +1,14 @@
-import {Request, Response, NextFunction} from "express";
+import {Request, Response, NextFunction, Handler} from "express";
 import UserM from "../database/models/user.schema";
-import ErrorHandling from "../assets/errors/ErrorHandling";
+import e from "../assets/errors/list.error";
+import tryController from "../assets/errors/tryController";
 
-const userExistance = async (req: Request, res: Response, next: NextFunction) => {
+const userExistence: Handler = tryController(async (req: Request, res: Response, next: NextFunction) => {
     const user = await UserM.exists({email: req.body.email});
 
-    if (user)
-        return ErrorHandling.sendErrorStatic(res, 403);
+    if (user) throw e["403"];
 
     next();
-}
+});
 
-export default userExistance;
+export default userExistence;

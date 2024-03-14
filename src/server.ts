@@ -31,6 +31,7 @@ class Server extends ErrorHandling {
         this.setHTTPServer();
         this.setConfig();
         this.setRoutes();
+        this.setErrorHandler();
     }
 
     private setHTTPServer = (): void => {
@@ -43,9 +44,9 @@ class Server extends ErrorHandling {
         });
 
         httpListing.on(ERROR_EVENT, error => this.consoleError(501, error));
-    }
+    };
 
-    private mongooseConfig = async (): Promise<any> => {
+    private mongooseConfig =  async (): Promise<any> => {
         try {
             const db: Mongoose = await connect(this.DB_URI, this.mongooseOpt);
 
@@ -55,18 +56,22 @@ class Server extends ErrorHandling {
         } catch (error) {
             this.consoleError(502, error);
         }
-    }
+    };
 
     private setConfig = (): void => {
         this.app.use(cors<Request>());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
-    }
+    };
 
     private setRoutes = (): void => {
         this.app.use(routes);
         this.app.use(STATIC, express.static(resolve(__dirname, "public")));
         this.app.use(STAR, notExistedRoute);
+    };
+
+    private setErrorHandler = (): void => {
+        this.app.use(this.errorControllerMiddleware);
     }
 }
 

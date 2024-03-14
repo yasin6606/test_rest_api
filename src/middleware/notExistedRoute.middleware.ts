@@ -1,8 +1,9 @@
-import {Request, Response} from "express";
-import ErrorHandling from "../assets/errors/ErrorHandling";
+import {Handler} from "express";
+import tryController from "../assets/errors/tryController";
+import e from "../assets/errors/list.error";
 
-const notExistedRoute = async (req: Request, res: Response) => {
-    ErrorHandling.sendErrorStatic(res, 404);
-}
+const notExistedRoute: Handler = tryController(async () => {
+    throw e["404"];
+});
 
 export default notExistedRoute;

@@ -1,17 +1,17 @@
-import {Request, Response, NextFunction} from "express";
+import {Request, Response, NextFunction, Handler} from "express";
 import UserM from "../database/models/user.schema";
 import {IUser} from "../assets/interfaces/user.interface";
-import ErrorHandling from "../assets/errors/ErrorHandling";
+import tryController from "../assets/errors/tryController";
+import e from "../assets/errors/list.error";
 
-const userFound = async (req: Request, res: Response, next: NextFunction) => {
+const userFound: Handler = tryController(async (req: Request, res: Response, next: NextFunction) => {
     const user = await UserM.findOne({email: req.body.email}) as IUser;
 
-    if (!user)
-        return ErrorHandling.sendErrorStatic(res, 401);
+    if (!user) throw e["401"];
 
     req.body.userFoundMiddleware = user;
 
     next();
-}
+});
 
 export default userFound;
